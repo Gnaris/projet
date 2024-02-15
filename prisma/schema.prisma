@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tache{
+  id Int @id @default(autoincrement())
+  projectId Int
+  titre String
+  description String
+  effort Int
+  etatId Int
+  etat Etat @relation(fields: [etatId], references: [id])
+  projet Project @relation(fields: [projectId], references: [id])
+}
+model Etat{
+  id Int @id @default(autoincrement())
+  etat String @unique
+  tache Tache[]
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+  users UserOnProject[]
+  taches Tache[]
+}
+
+model UserOnProject {
+  id Int @id @default(autoincrement())
+  userId Int
+  projectId Int
+  statutId Int
+  user User @relation(fields: [userId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
+  statut Statut @relation(fields: [statutId], references: [id])
+}
+model Statut{
+  id Int @id @default(autoincrement())
+  statut String @unique
+  userStatuts UserOnProject[]
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String
+  roleId Int
+  role Role @relation(fields: [roleId], references: [id])
+  projects UserOnProject[]
+}
+model Role{
+  id Int @id @default(autoincrement())
+  role String @unique
+  users User[]
+}
+
