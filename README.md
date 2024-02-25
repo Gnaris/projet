@@ -1,36 +1,176 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Documentation du projet 📖
 
-First, run the development server:
+### Packages supplémentaires nécessaire pour tourner l'application ❗
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+ - Prisma (ORM)
+`Prisma est un outil ORM (Object-Relational Mapping) qui accélère le développement en    simplifiant l'interaction avec la base de données, permettant aux développeurs de manipuler les données à travers des modèles de données définis en code plutôt qu'en SQL directement.`
+ - Json Web Token
+`JSON Web Token (JWT) est une norme ouverte (RFC 7519) qui facilite l'authentification et l'autorisation sécurisées dans les applications web et mobiles en permettant l'échange de jetons entre parties de confiance, offrant ainsi une méthode efficace pour gérer les sessions utilisateur et les autorisations d'accès.`
+ - Bcrypt
+`Bcrypt est une fonction de hachage de mots de passe qui offre un moyen sécurisé de stocker les mots de passe des utilisateurs en les hachant avec un algorithme de hachage lent et irréversible, ce qui renforce la sécurité des systèmes en rendant les attaques par force brute plus difficiles et en protégeant les mots de passe en clair.`
+
+
+### Les Fonctionnalités 📲
+
+ - Système d'authentifcation sécurisé. 
+ - Système de gestion projet CRUD (Create, Read, Update, Delete).
+ - Gestion des permissions ou des droits d'utilisateur sur les fonctionnalités.
+
+
+# Partie Technique 💻
+## Architecture du projet
+
+## Racine (./)
+
+| Nom du dossier            | Rôle                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| Prisma | Gérer la base donnée entièrement |
+| src | Constitue le corps de notre application |
+| .env | Configuration de la base de donnée |
+| AccountText.txt | Liste des utilisateurs et mot de passe pour faire la demo |
+
+## Src (./src)
+
+| Nom du dossier            | Rôle                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| app | Gestion des pages et des api |
+| components | Séparer les blocs HTML pour plus de lisibilité et éviter les répétitions |
+| database | Permet de se connecter à la base de donnée sans répéter les connections |
+| entity | Dossier dédié au objet |
+| services | Fournisseur de context et appel d'API |
+| styles | CSS |
+| types | Liste des types |
+
+## Component (./src/components)
+
+| Nom du dossier            | Rôle                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| global | Liste des composants permettant d'éviter les répétitions |
+| [nom de la page] | Des composants didés uniquement pour cette page |
+
+## Service (./src/services)
+
+| Nom du dossier            | Rôle                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| api | Les fonctions permettant de faire des appels api |
+| provider | Fournisseur de context |
+
+
+
+
+
+## Référence API
+
+#### Se connecter
+
+```http
+  POST /api/login
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | `string` | **Obligatoire**. Identifiant |
+| `password` | `string` | **Obligatoire**. Mot de passe |
+
+#### Récupérer les projets et les tâches de l'utilisateur connecté
+
+```http
+  POST /api/project
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `token`      | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
+
+#### Modifier le titre ou la description du projet
+
+```http
+  PUT /api/project
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `token`      | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
+| `id`      | `number` | **Facultatif**. Modifie le titre |
+| `name`      | `string` | **Facultatif**. Modifie le titre |
+| `description` | `string` | **Facultatif**. Modifie la description |
+
+#### Ajouter une tâche
+
+```http
+  POST /api/project/task
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `token`      | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
+| `titre`      | `string` | **Obligatoire**. rajoute le titre |
+| `description` | `string` | **Obligatoire**. rajoute la description |
+| `effort` | `string` | **Obligatoire**. rajoute l'effort |
+| `typeId` | `string` | **Obligatoire**. rajoute le type |
+| `stateId` | `string` | **Obligatoire**. rajoute l'état |
+| `projectId` | `number` | **Obligatoire**. L'attribuer dans quel projet |
+
+#### Modifier une tâche
+
+```http
+  PUT /api/project/task
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `token`      | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
+| `id`      | `number` | **Obligatoire**. savoir quelle tâche modifier |
+| `titre`      | `string` | **Facultatif**. modifie le titre |
+| `description` | `string` | **Facultatif**. modifie la description |
+| `effort` | `string` | **Facultatif**. modifie l'effort |
+| `typeId` | `string` | **Facultatif**. modifie le type |
+| `stateId` | `string` | **Facultatif**. modifie l'état |
+
+
+#### Supprimer une tâche
+
+```http
+  DELETE /api/project/task
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `token`      | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
+| `id`      | `number` | **Obligatoire**. savoir quelle tâche supprimer |
+
+#### Recuperer tout les types possibles des tâches
+
+```http
+  GET /api/project/task/type
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Recuperer tout les états possible des tâches
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```http
+  GET /api/project/task/state
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Variable Environnement
 
-To learn more about Next.js, take a look at the following resources:
+Dans le fichier .env se trouve uniquement la clé `DATABASE_URL` qui permet de configurer et générer automatiquement votre base de donnée y compris les tables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Exemple :**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`DATABASE_URL="{type de base de donnée}://{identifiant}:{mot de passe}@{adresse base de donnée}:{port}/{nom de la base donnée souhaitée}?schema=public"`
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Installation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Avant de pouvoir faire fonctionner l'application, il faudra d'abord installer les dépédances nécessaires (ne pas oublier de configurer la base de donnée qui se trouve dans le fichier .env avant de lancer l'installation)
+
+```bash
+  -npm install
+  -npx prisma migrate dev
+  -npm run seed (permet de générer des fausses données dans la base de donnée)
+```
+    
+## Démo
+
+lancer le serveur
+
+```bash
+  npm run dev
+```
+

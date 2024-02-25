@@ -1,0 +1,16 @@
+$colors : ("black" : #000,
+  "white" : #FFF,
+  "grey" : lightgrey,
+  "red" : rgb(255, 65, 65),
+);
+
+
+@each $class, $color in $colors {
+  .#{$class} {
+    color: $color;
+  }
+
+  .bg-#{$class} {
+    background-color: $color;
+  }
+}

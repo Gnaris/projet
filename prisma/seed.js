@@ -1,15 +1,35 @@
-const { PrismaClient } = require('@prisma/client')
-const { users } = require('./seed/user.js')
+const { PrismaClient } = require("@prisma/client");
+const fs = require("fs")
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-async function load(){
+async function load() {
 
-    await prisma.$queryRaw`TRUNCATE user`;
+  await prisma.user.createMany({
+    data: JSON.parse(fs.readFileSync(`${__dirname}/seed/user.json`))
+  })
 
-    // await prisma.user.createMany({
-    //     data : users
-    // })
+  await prisma.project.createMany({
+    data: JSON.parse(fs.readFileSync(`${__dirname}/seed/project.json`))
+  })
+  await prisma.status.createMany({
+    data: JSON.parse(fs.readFileSync(`${__dirname}/seed/status.json`))
+  })
+
+  await prisma.userOnProject.createMany({
+    data: JSON.parse(fs.readFileSync(`${__dirname}/seed/userOnProject.json`))
+  })
+
+  await prisma.state.createMany({
+    data: JSON.parse(fs.readFileSync(`${__dirname}/seed/state.json`))
+  })
+  await prisma.type.createMany({
+    data: JSON.parse(fs.readFileSync(`${__dirname}/seed/type.json`))
+  })
+  await prisma.task.createMany({
+    data: JSON.parse(fs.readFileSync(`${__dirname}/seed/task.json`))
+  })
+
 }
 
-load()
+load();
