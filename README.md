@@ -2,6 +2,8 @@
 
 ### Packages supplémentaires nécessaire pour tourner l'application ❗
 
+- TailwindCSS
+  `Tailwind CSS est une bibliothèque CSS utilitaire qui simplifie le processus de création d'interfaces web en permettant une construction rapide et flexible grâce à des classes pré-définies.`
 - Prisma (ORM)
   `Prisma est un outil ORM (Object-Relational Mapping) qui accélère le développement en    simplifiant l'interaction avec la base de données, permettant aux développeurs de manipuler les données à travers des modèles de données définis en code plutôt qu'en SQL directement.`
 - Json Web Token
@@ -11,7 +13,7 @@
 
 ### Les Fonctionnalités 📲
 
-- Système d'authentifcation sécurisé.
+- Système d'authentifcation (inscription et connexion) sécurisé.
 - Système de gestion projet CRUD (Create, Read, Update, Delete).
 - Gestion des permissions ou des droits d'utilisateur sur les fonctionnalités.
 
@@ -45,109 +47,19 @@
 | Nom du dossier   | Rôle                                                     |
 | ---------------- | -------------------------------------------------------- |
 | global           | Liste des composants permettant d'éviter les répétitions |
-| [nom de la page] | Des composants didés uniquement pour cette page          |
+| [nom de la page] | Des composants dédiés uniquement pour cette page         |
 
-## Service (./src/services)
+## Server (./src/server)
 
-| Nom du dossier | Rôle                                             |
-| -------------- | ------------------------------------------------ |
-| api            | Les fonctions permettant de faire des appels api |
-| provider       | Fournisseur de context                           |
-
-## Référence API
-
-#### Se connecter
-
-```http
-  POST /api/login
-```
-
-| Parameter  | Type     | Description                   |
-| :--------- | :------- | :---------------------------- |
-| `name`     | `string` | **Obligatoire**. Identifiant  |
-| `password` | `string` | **Obligatoire**. Mot de passe |
-
-#### Récupérer les projets et les tâches de l'utilisateur connecté
-
-```http
-  POST /api/project
-```
-
-| Parameter | Type     | Description                                              |
-| :-------- | :------- | :------------------------------------------------------- |
-| `token`   | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
-
-#### Modifier le titre ou la description du projet
-
-```http
-  PUT /api/project
-```
-
-| Parameter     | Type     | Description                                              |
-| :------------ | :------- | :------------------------------------------------------- |
-| `token`       | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
-| `id`          | `number` | **Facultatif**. Modifie le titre                         |
-| `name`        | `string` | **Facultatif**. Modifie le titre                         |
-| `description` | `string` | **Facultatif**. Modifie la description                   |
-
-#### Ajouter une tâche
-
-```http
-  POST /api/project/task
-```
-
-| Parameter     | Type     | Description                                              |
-| :------------ | :------- | :------------------------------------------------------- |
-| `token`       | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
-| `titre`       | `string` | **Obligatoire**. rajoute le titre                        |
-| `description` | `string` | **Obligatoire**. rajoute la description                  |
-| `effort`      | `string` | **Obligatoire**. rajoute l'effort                        |
-| `typeId`      | `string` | **Obligatoire**. rajoute le type                         |
-| `stateId`     | `string` | **Obligatoire**. rajoute l'état                          |
-| `projectId`   | `number` | **Obligatoire**. L'attribuer dans quel projet            |
-
-#### Modifier une tâche
-
-```http
-  PUT /api/project/task
-```
-
-| Parameter     | Type     | Description                                              |
-| :------------ | :------- | :------------------------------------------------------- |
-| `token`       | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
-| `id`          | `number` | **Obligatoire**. savoir quelle tâche modifier            |
-| `titre`       | `string` | **Facultatif**. modifie le titre                         |
-| `description` | `string` | **Facultatif**. modifie la description                   |
-| `effort`      | `string` | **Facultatif**. modifie l'effort                         |
-| `typeId`      | `string` | **Facultatif**. modifie le type                          |
-| `stateId`     | `string` | **Facultatif**. modifie l'état                           |
-
-#### Supprimer une tâche
-
-```http
-  DELETE /api/project/task
-```
-
-| Parameter | Type     | Description                                              |
-| :-------- | :------- | :------------------------------------------------------- |
-| `token`   | `string` | **Obligatoire**. A mettre dans l'en-tête "Authorization" |
-| `id`      | `number` | **Obligatoire**. savoir quelle tâche supprimer           |
-
-#### Recuperer tout les types possibles des tâches
-
-```http
-  GET /api/project/task/type
-```
-
-#### Recuperer tout les états possible des tâches
-
-```http
-  GET /api/project/task/state
-```
+| Nom du dossier   | Rôle                                         |
+| ---------------- | -------------------------------------------- |
+| [nom de la page] | Server Action pour intéragir avec le serveur |
 
 ## Variable Environnement
 
 Dans le fichier .env se trouve uniquement la clé `DATABASE_URL` qui permet de configurer et générer automatiquement votre base de donnée y compris les tables
+BCRYPT_SALT : Permet de saler les mot de passe. Plus le nombre est haut plus le traitement de cryptable sera long
+JWT_SIGN : Permet de mettre une signature pour chaque token lors de l'authentification
 
 **Exemple :**
 
@@ -158,15 +70,19 @@ Dans le fichier .env se trouve uniquement la clé `DATABASE_URL` qui permet de c
 Avant de pouvoir faire fonctionner l'application, il faudra d'abord installer les dépédances nécessaires (ne pas oublier de configurer la base de donnée qui se trouve dans le fichier .env avant de lancer l'installation)
 
 ```bash
-  -npm install
+  -Installer un éditeur de text (Visual Studio Code)
+  -Installer NodeJs, version utilisé par defaut 20.10.0
+  -Ouvrir le projet avec l'éditeur de text
+  -Ouvrez le terminal
+  -npm install (permet d'installer les dépendance nécessaire)
+  -Configurer votre fichier .env (lire la documentation ci-dessus)
   -npx prisma migrate dev
   -npm run seed (permet de générer des fausses données dans la base de donnée)
+  -npm run dev
 ```
 
-## Démo
-
-lancer le serveur
+## COMMANDE UTILE
 
 ```bash
-  npm run dev
+-npm run resetdata (Permet de supprimer les données et regénérer les mêmes fausses données dans la base de donnée)
 ```
