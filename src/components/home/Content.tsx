@@ -9,7 +9,6 @@ import UserContext from '@/context/UserContext';
 import { useRouter } from 'next/navigation';
 import EditProjectForm from './Form/EditProjectForm';
 import DeleteProjectForm from './Form/DeleteProjectForm';
-import Link from 'next/link';
 import User from '@/entity/User';
 type Props = {
     projects: ProjectType[]

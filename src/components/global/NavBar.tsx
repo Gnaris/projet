@@ -14,8 +14,10 @@ export const NavBar = (props: Props) => {
                 <li className='p-5 bg-gradient-to-r from-slate-600 to-indigo-950'>Vos Projets</li>
             </ul>
             <div className='flex justify-center items-center w-full h-1/6 font-roboto text-xl font-medium '>
-                <button className='w-3/4 p-4 bg-gradient-to-r from-slate-600 to-indigo-900 rounded-full hover:bg-blue-800'><Link href={"/"}>Se déconnecter</Link></button>
+                <Link href={"/"} className='flex justify-center items-center w-3/4 p-4 bg-gradient-to-r from-slate-600 to-indigo-900 rounded-full hover:bg-blue-800'>
+                    Se déconnecter
+                </Link>
             </div>
-        </nav>
+        </nav >
     );
 };

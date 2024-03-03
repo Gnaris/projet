@@ -18,3 +18,13 @@ export const getStatus = async () => {
     const status = await Database.getPrisma().status.findMany()
     return status;
 }
+
+export const getStates = async () => {
+    const states = await Database.getPrisma().state.findMany()
+    return states
+}
+
+export const getTypes = async () => {
+    const types = await Database.getPrisma().type.findMany()
+    return types
+}

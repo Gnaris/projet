@@ -26,7 +26,6 @@ export const getUserProjects = async (userId: number) => {
 }
 
 export const createProject = async (projectName: string, description: string, managerId: number, usersOnProject: { id: number, name: string, statusId: number, status: string }[]) => {
-    'use server'
     const data = await Database.getPrisma().project.create({
         data: {
             nom: projectName,

@@ -1,12 +1,12 @@
 import ModalForm from "@/components/global/ModalForm";
 import useProject from "./hooks/useProject";
 import { updateProject } from "@/server/home.action";
-import FormHeader from "./components/FormHeader";
-import Input from "./components/Input";
-import TextArea from "./components/TextArea";
-import SelectForm from "./components/SelectForm";
-import SelectResult from "./components/SelectResult";
-import Submit from "./components/Submit";
+import FormHeader from "@/components/global/form/FormHeader";
+import Input from "@/components/global/form/Input";
+import TextArea from "@/components/global/form/TextArea";
+import SelectForm from "@/components/home/Form/SelectForm";
+import SelectResult from "@/components/home/Form/SelectResult";
+import Submit from "@/components/global/form/Submit";
 
 type Props = {
     project: { id: number, name: string, description: string }
@@ -31,8 +31,8 @@ export default function EditProjectForm(props: Props) {
             <div className="flex flex-col p-4 px-6 gap-8 w-3/6 h-3/4 bg-zinc-100 rounded-xl">
                 <FormHeader title={`Éditer le projet nº ${props.project.id}`} closeModal={props.closeModal} />
                 <form className='flex flex-col gap-8 overflow-y-auto' action={editProjet}>
-                    <Input label='Nom du projet' name='name' defaultValue={props.project.name} type='text' placeholder='Faire de la pate a modeler' />
-                    <TextArea title='Description' name='description' defaultValue={props.project.description} placeholder="C'est la base des bases" />
+                    <Input label='Nom du projet' name='name' defaultValue={props.project.name} type='text' />
+                    <TextArea title='Description' name='description' defaultValue={props.project.description} />
                     <SelectForm {...{ users, status, selectUser, selectStatus, addUserOnProject }} />
                     <SelectResult {...{ usersOnProject, removeUserOnProject }} />
                     <Submit label='Modifier' />

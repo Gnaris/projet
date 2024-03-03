@@ -10,21 +10,20 @@ import { NavBar } from "@/components/global/NavBar";
 import { Header } from "@/components/home/Header";
 import { Content } from "@/components/home/Content";
 import UserContext from "@/context/UserContext";
+import { useUser } from "@/hooks/useUser";
 
 const Page = () => {
 
-    const [user, setUser] = useState<UserTokenPayloadType>()
+    const { user } = useUser()
     const [projects, setProjects] = useState<ProjectType[]>([]);
 
     const router = useRouter()
 
     useEffect(() => {
-        const result = new User().getUserPayloadOrDisconnect(router);
-        if (result) {
-            setUser(result);
+        if (user) {
             (async () => {
-                if (result.id) {
-                    const projects = await getUserProjects(result.id)
+                if (user.id) {
+                    const projects = await getUserProjects(user.id)
                     setProjects(projects)
                 } else {
                     localStorage.removeItem("token")
@@ -33,7 +32,7 @@ const Page = () => {
             })()
         }
 
-    }, [router])
+    }, [router, user])
 
     return (
         <UserContext.Provider value={user}>

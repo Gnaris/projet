@@ -1,6 +1,12 @@
 'use client'
 
+import Content from "@/components/home.project/Content";
+import Header from "@/components/home.project/Header";
+import { useUser } from "@/hooks/useUser";
+import { getProjectTask } from "@/server/home.project.action";
+import { ProjectTaskType } from "@/types/ProjectType";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Page() {
 
@@ -10,14 +16,24 @@ export default function Page() {
         throw new Error("Cette page doit uniquement contenir un id /home/project/[id]")
     }
 
+    const { user } = useUser()
+    const [project, setProject] = useState<ProjectTaskType>()
+
+    useEffect(() => {
+        (async () => {
+            if (params.id && user && user.id) {
+                const project: ProjectTaskType | null = await getProjectTask(Number(params.id))
+                if (project != null) {
+                    setProject(project)
+                }
+            }
+        })()
+    }, [params.id, user])
+
     return (
         <div className="flex flex-col w-screen h-screen">
-            <header className="flex items-center px-4 w-full h-16 bg-gradient-to-r from-indigo-950 to-blue-950 bg-repeat-space">
-                <button className="w-1/12 h-1/2 bg-indigo-800 hover:bg-indigo-700 font-roboto text-white font-bold text-xl rounded-xl">Retour</button>
-            </header>
-            <main className="flex flex-grow w-full bg-indigo-950">
-
-            </main>
+            <Header {...{ project, user }} />
+            <Content {...{ project, user }} />
         </div>
     );
 };
