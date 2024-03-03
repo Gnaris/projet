@@ -71,13 +71,21 @@ Avant de pouvoir faire fonctionner l'application, il faudra d'abord installer le
 
 ```bash
   -Installer un éditeur de text (Visual Studio Code)
+
   -Installer NodeJs, version utilisé par defaut 20.10.0
+
   -Ouvrir le projet avec l'éditeur de text
+
   -Ouvrez le terminal
+
   -npm install (permet d'installer les dépendance nécessaire)
+
   -Configurer votre fichier .env (lire la documentation ci-dessus)
+
   -npx prisma migrate dev
+
   -npm run seed (permet de générer des fausses données dans la base de donnée)
+
   -npm run dev
 ```
 
