@@ -1,18 +1,16 @@
-import { TaskType } from "./TaskType"
-
 export interface ProjectType {
     id: number,
-    projectId: number,
-    userId: number,
-    statusId: number,
-    project: {
+    nom: string,
+    description: string,
+    managerId: number,
+    manager: { id: number, name: string },
+    tasks: {
         id: number,
-        nom: string,
+        titre: string,
         description: string,
-        tasks: TaskType[]
-    },
-    status: {
-        id: number,
-        status: string,
-    }
+        effort: number,
+        projectId: number,
+        stateId: number,
+        typeId: number,
+    }[]
 }

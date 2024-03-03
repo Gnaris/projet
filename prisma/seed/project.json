@@ -1,22 +1,27 @@
 [
   {
     "description": "Supplement Right Buttock with Nonautologous Tissue Substitute, Open Approach",
-    "nom": "Lianluo Smart Limited"
+    "nom": "Lianluo Smart Limited",
+    "managerId": 1
   },
   {
     "description": "Restriction of Left Internal Mammary Lymphatic with Extraluminal Device, Open Approach",
-    "nom": "EV Energy Partners, L.P."
+    "nom": "EV Energy Partners, L.P.",
+    "managerId": 1
   },
   {
     "description": "Drainage of Pancreas, Percutaneous Endoscopic Approach",
-    "nom": "Ultragenyx Pharmaceutical Inc."
+    "nom": "Ultragenyx Pharmaceutical Inc.",
+    "managerId": 1
   },
   {
     "description": "Bypass Left Common Iliac Artery to Celiac Artery with Autologous Arterial Tissue, Open Approach",
-    "nom": "Sprint Corporation"
+    "nom": "Sprint Corporation",
+    "managerId": 2
   },
   {
     "description": "Motor Function Treatment of Integumentary System - Lower Back / Lower Extremity using Orthosis",
-    "nom": "Northern Trust Corporation"
+    "nom": "Northern Trust Corporation",
+    "managerId": 2
   }
 ]

@@ -1,5 +1,6 @@
-import { UserTokenPayload } from "@/types/userTokenType";
+import { UserTokenPayloadType } from "@/types/userTokenType";
 import jwt from 'jsonwebtoken'
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export default class User {
 
@@ -9,14 +10,17 @@ export default class User {
         this.token = localStorage.getItem("token");
     }
 
-    public getUserPayload = (): UserTokenPayload | false => {
+    public getUserPayloadOrDisconnect = (router: AppRouterInstance): UserTokenPayloadType | void => {
         if (!this.token) {
-            return false;
+            router.push("/")
+            return;
         }
 
-        const userPayload = jwt.decode(this.token) as UserTokenPayload;
+        const userPayload = jwt.decode(this.token) as UserTokenPayloadType;
         if (!userPayload || !userPayload.id || !userPayload.name || !userPayload.iat) {
-            return false;
+            localStorage.removeItem("token")
+            router.push("/")
+            return;
         }
 
         return userPayload;

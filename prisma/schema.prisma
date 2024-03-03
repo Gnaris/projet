@@ -19,7 +19,7 @@ model Task{
   stateId Int
   typeId Int
   state State @relation(fields: [stateId], references: [id])
-  projet Project @relation(fields: [projectId], references: [id])
+  projet Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   type Type @relation(fields: [typeId], references: [id])
 }
 model State{
@@ -37,6 +37,8 @@ model Project {
   id Int @id @default(autoincrement())
   nom String
   description String @db.LongText
+  managerId Int
+  manager User @relation(fields: [managerId], references: [id])
   users UserOnProject[]
   tasks Task[]
 }
@@ -47,7 +49,7 @@ model UserOnProject {
   projectId Int
   statusId Int
   user User @relation(fields: [userId], references: [id])
-  project Project @relation(fields: [projectId], references: [id])
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   status Status @relation(fields: [statusId], references: [id])
 }
 model Status{
@@ -61,5 +63,6 @@ model User {
   name    String
   password String
   projects UserOnProject[]
+  projectManager Project[]
 }
 
